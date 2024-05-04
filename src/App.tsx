@@ -1,7 +1,11 @@
-import Header from "./components/Header";
+import CitySearch from "./components/CitySearch";
 
 function App() {
-    return <Header />;
+    return (
+        <div>
+            <CitySearch />
+        </div>
+    );
 }
 
 export default App;
