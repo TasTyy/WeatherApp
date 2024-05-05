@@ -98,11 +98,17 @@ function App() {
                 </div>
             ) : (
                 weatherData && (
-                    <WeatherChart
-                        city={city}
-                        time={weatherData.time}
-                        temperature2m={weatherData.temperature2m}
-                    />
+                    <div>
+                        <h3>
+                            Below graph is showing temperatures for the past 2
+                            days current day and forecast for next 4 days
+                        </h3>
+                        <WeatherChart
+                            city={city}
+                            time={weatherData.time}
+                            temperature2m={weatherData.temperature2m}
+                        />
+                    </div>
                 )
             )}
         </div>

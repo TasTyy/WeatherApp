@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { Message } from "primereact/message"; // Step 1
 import "primeicons/primeicons.css";
 
 interface WeatherData {
@@ -10,18 +11,18 @@ interface WeatherData {
 }
 
 interface CitySearchProps {
-    onSearch: (weatherData: WeatherData, cityName: string) => void; // Update onSearch function signature
+    onSearch: (weatherData: WeatherData, cityName: string) => void;
 }
 
 function CitySearch({ onSearch }: CitySearchProps) {
     const [city, setCity] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSearch = async () => {
         try {
             // Fetch latitude and longitude for the entered city using a geocoding service
+            setErrorMessage("");
             const coordinates = await fetchCoordinates(city);
-
-            console.log(coordinates);
 
             // Fetch weather data using the obtained coordinates
             const params = {
@@ -31,17 +32,13 @@ function CitySearch({ onSearch }: CitySearchProps) {
             };
             const url = "https://api.open-meteo.com/v1/forecast";
             const responses = await fetchWeatherApi(url, params);
-
-            // Process first location. Add a for-loop for multiple locations or weather models
             const response = responses[0];
             const hourly = response?.hourly();
-
             if (hourly) {
                 // Convert Float32Array to regular array
                 const temperature2m: number[] = Array.from(
                     hourly.variables(0)?.valuesArray() ?? []
                 );
-
                 // Extract required weather data
                 const weatherData: WeatherData = {
                     time: range(
@@ -54,10 +51,10 @@ function CitySearch({ onSearch }: CitySearchProps) {
                     ),
                     temperature2m: temperature2m,
                 };
-                onSearch(weatherData, city); // Pass both weather data and city name to onSearch
+                onSearch(weatherData, city);
             }
         } catch (error) {
-            console.error("Error fetching weather data:", error);
+            setErrorMessage("Insert correct city name");
         }
         setCity("");
     };
@@ -86,13 +83,20 @@ function CitySearch({ onSearch }: CitySearchProps) {
         );
 
     return (
-        <div className="p-inputgroup p-mb-4">
-            <InputText
-                placeholder="Enter city name..."
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-            />
-            <Button label="Search" icon="pi pi-search" onClick={handleSearch} />
+        <div>
+            <div className="p-inputgroup p-mb-4">
+                <InputText
+                    placeholder="Enter city name..."
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                />
+                <Button
+                    label="Search"
+                    icon="pi pi-search"
+                    onClick={handleSearch}
+                />
+            </div>
+            {errorMessage && <Message severity="error" text={errorMessage} />}
         </div>
     );
 }

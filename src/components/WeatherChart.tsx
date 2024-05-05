@@ -43,6 +43,14 @@ const WeatherChart: React.FC<WeatherChartProps> = ({
                 text: `Temperature data for ${city}`,
             },
         },
+        scales: {
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 10,
+                },
+            },
+        },
     };
 
     const data = {
@@ -51,6 +59,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({
             {
                 label: "Temperature",
                 data: temperature2m,
+                borderColor: "rgb(1, 50, 58)",
                 backgroundColor: "rgb(6, 182, 212)",
             },
         ],
