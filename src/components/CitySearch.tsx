@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fetchWeatherApi } from "openmeteo";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import "primeicons/primeicons.css";
 
 interface WeatherData {
     time: Date[];
@@ -9,7 +10,7 @@ interface WeatherData {
 }
 
 interface CitySearchProps {
-    onSearch: (weatherData: WeatherData) => void;
+    onSearch: (weatherData: WeatherData, cityName: string) => void; // Update onSearch function signature
 }
 
 function CitySearch({ onSearch }: CitySearchProps) {
@@ -53,9 +54,7 @@ function CitySearch({ onSearch }: CitySearchProps) {
                     ),
                     temperature2m: temperature2m,
                 };
-
-                console.log(weatherData);
-                onSearch(weatherData);
+                onSearch(weatherData, city); // Pass both weather data and city name to onSearch
             }
         } catch (error) {
             console.error("Error fetching weather data:", error);

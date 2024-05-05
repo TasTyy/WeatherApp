@@ -1,8 +1,8 @@
-// App.tsx
 import { useState } from "react";
 import CitySearch from "./components/CitySearch";
 import WeatherChart from "./components/WeatherChart";
 
+import "./App.css";
 interface WeatherData {
     time: Date[];
     temperature2m: number[];
@@ -10,18 +10,20 @@ interface WeatherData {
 
 function App() {
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+    const [city, setCity] = useState<string>("");
 
-    const handleSearch = (data: WeatherData) => {
+    const handleSearch = (data: WeatherData, cityName: string) => {
         setWeatherData(data);
-        console.log(data);
+        setCity(cityName);
     };
 
     return (
-        <div className="flex items-center">
-            <p className="text-lg align-middle">Weather App</p>
+        <div>
+            <h1 style={{ textAlign: "center" }}>Weather app</h1>
             <CitySearch onSearch={handleSearch} />
             {weatherData && (
                 <WeatherChart
+                    city={city}
                     time={weatherData.time}
                     temperature2m={weatherData.temperature2m}
                 />
