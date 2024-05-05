@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { fetchWeatherApi } from "openmeteo";
+
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { Message } from "primereact/message"; // Step 1
-import "primeicons/primeicons.css";
+import { Message } from "primereact/message";
 
-interface WeatherData {
-    time: Date[];
-    temperature2m: number[];
-}
+import { fetchWeatherByCoordinates, WeatherData } from "../utils/weatherUtils";
 
 interface CitySearchProps {
     onSearch: (weatherData: WeatherData, cityName: string) => void;
@@ -20,48 +16,22 @@ function CitySearch({ onSearch }: CitySearchProps) {
 
     const handleSearch = async () => {
         try {
-            // Fetch latitude and longitude for the entered city using a geocoding service
             setErrorMessage("");
-            const coordinates = await fetchCoordinates(city);
+            const coordinates = await fetchCityCoordinates(city); // Use fetchCityCoordinates from weatherUtils
 
-            // Fetch weather data using the obtained coordinates
-            const params = {
-                latitude: coordinates.latitude,
-                longitude: coordinates.longitude,
-                hourly: "temperature_2m",
-            };
-            const url = "https://api.open-meteo.com/v1/forecast";
-            const responses = await fetchWeatherApi(url, params);
-            const response = responses[0];
-            const hourly = response?.hourly();
-            if (hourly) {
-                // Convert Float32Array to regular array
-                const temperature2m: number[] = Array.from(
-                    hourly.variables(0)?.valuesArray() ?? []
-                );
-                // Extract required weather data
-                const weatherData: WeatherData = {
-                    time: range(
-                        Number(hourly.time()),
-                        Number(hourly.timeEnd()),
-                        hourly.interval()
-                    ).map(
-                        (t: number) =>
-                            new Date((t + response.utcOffsetSeconds()) * 1000)
-                    ),
-                    temperature2m: temperature2m,
-                };
-                onSearch(weatherData, city);
-            }
+            const weatherData = await fetchWeatherByCoordinates(
+                // Use fetchWeatherByCoordinates from weatherUtils
+                coordinates.latitude,
+                coordinates.longitude
+            );
+            onSearch(weatherData, city);
         } catch (error) {
             setErrorMessage("Insert correct city name");
         }
         setCity("");
     };
 
-    // Function to fetch latitude and longitude for the entered city
-    const fetchCoordinates = async (city: string) => {
-        // Geocoding service API to fetch coordinates for the city
+    const fetchCityCoordinates = async (city: string) => {
         const response = await fetch(
             `https://nominatim.openstreetmap.org/search?q=${city}&format=json`
         );
@@ -75,12 +45,6 @@ function CitySearch({ onSearch }: CitySearchProps) {
             throw new Error("City not found");
         }
     };
-
-    const range = (start: number, stop: number, step: number) =>
-        Array.from(
-            { length: (stop - start) / step },
-            (_, i) => start + i * step
-        );
 
     return (
         <div className="citySearch">

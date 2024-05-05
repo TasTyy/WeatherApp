@@ -22,25 +22,16 @@ ChartJS.register(
 );
 
 interface WeatherChartProps {
-    city: string;
     time: Date[];
     temperature2m: number[];
 }
 
-const WeatherChart: React.FC<WeatherChartProps> = ({
-    city,
-    time,
-    temperature2m,
-}) => {
+const WeatherChart: React.FC<WeatherChartProps> = ({ time, temperature2m }) => {
     const options = {
         responsive: true,
         plugins: {
             legend: {
                 position: "top" as const,
-            },
-            title: {
-                display: true,
-                text: `Temperature data for ${city}`,
             },
         },
         scales: {
