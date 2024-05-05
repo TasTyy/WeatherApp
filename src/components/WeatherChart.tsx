@@ -51,8 +51,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({
             {
                 label: "Temperature",
                 data: temperature2m,
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                backgroundColor: "rgb(6, 182, 212)",
             },
         ],
     };
