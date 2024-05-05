@@ -13,6 +13,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.citySearch {
+    padding-bottom: 20px;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

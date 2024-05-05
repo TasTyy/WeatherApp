@@ -83,7 +83,7 @@ function CitySearch({ onSearch }: CitySearchProps) {
         );
 
     return (
-        <div>
+        <div className="citySearch">
             <div className="p-inputgroup p-mb-4">
                 <InputText
                     placeholder="Enter city name..."

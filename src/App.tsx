@@ -3,7 +3,7 @@ import CitySearch from "./components/CitySearch";
 import WeatherChart from "./components/WeatherChart";
 import { fetchWeatherApi } from "openmeteo";
 
-import "./App.css";
+import { Card } from "primereact/card";
 
 interface WeatherData {
     time: Date[];
@@ -17,7 +17,7 @@ function App() {
 
     useEffect(() => {
         fetchWeatherByLocation();
-    }, []);
+    });
 
     const fetchWeatherByLocation = async () => {
         try {
@@ -98,17 +98,14 @@ function App() {
                 </div>
             ) : (
                 weatherData && (
-                    <div>
-                        <h3>
-                            Below graph is showing temperatures for the past 2
-                            days current day and forecast for next 4 days
-                        </h3>
+                    <Card title="Graph is showing temperatures for the past 2 days current day and forecast for next 4 days">
+                        <h3></h3>
                         <WeatherChart
                             city={city}
                             time={weatherData.time}
                             temperature2m={weatherData.temperature2m}
                         />
-                    </div>
+                    </Card>
                 )
             )}
         </div>
