@@ -13,8 +13,21 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.citySearch {
-    padding-bottom: 20px;
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inner-div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.weather-code-div {
+    display: flex;
+    flex-direction: row;
 }
 
 @tailwind base;

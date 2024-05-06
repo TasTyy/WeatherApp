@@ -4,6 +4,7 @@ import { Card } from "primereact/card";
 
 import CitySearch from "./components/CitySearch";
 import WeatherChart from "./components/WeatherChart";
+import WeatherCode from "./components/WeatherCode";
 import { fetchWeatherByCoordinates, WeatherData } from "./utils/weatherUtils";
 
 function App() {
@@ -25,7 +26,6 @@ function App() {
                     );
                     setCity(await fetchCityName(latitude, longitude));
                     setWeatherData(weatherData);
-                    // Optionally, set city based on reverse geocoding using latitude and longitude
                 },
                 (error) => {
                     console.error("Error fetching user location:", error);
@@ -55,16 +55,22 @@ function App() {
     };
 
     return (
-        <div>
+        <div className="main">
             <h1 style={{ textAlign: "center" }}>Weather app</h1>
             <CitySearch onSearch={handleSearch} />
             {weatherData && (
-                <Card title={`${city}`} subTitle="Temperature graph">
-                    <WeatherChart
-                        time={weatherData.time}
-                        temperature2m={weatherData.temperature2m}
-                    />
-                </Card>
+                <div className="inner-div">
+                    <Card>
+                        <WeatherCode city={city} />
+                    </Card>
+
+                    <Card title={`${city}`} subTitle="Temperature graph">
+                        <WeatherChart
+                            time={weatherData.time}
+                            temperature2m={weatherData.temperature2m}
+                        />
+                    </Card>
+                </div>
             )}
         </div>
     );

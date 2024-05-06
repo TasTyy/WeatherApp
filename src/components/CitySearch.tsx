@@ -17,10 +17,9 @@ function CitySearch({ onSearch }: CitySearchProps) {
     const handleSearch = async () => {
         try {
             setErrorMessage("");
-            const coordinates = await fetchCityCoordinates(city); // Use fetchCityCoordinates from weatherUtils
+            const coordinates = await fetchCityCoordinates(city);
 
             const weatherData = await fetchWeatherByCoordinates(
-                // Use fetchWeatherByCoordinates from weatherUtils
                 coordinates.latitude,
                 coordinates.longitude
             );
@@ -47,7 +46,7 @@ function CitySearch({ onSearch }: CitySearchProps) {
     };
 
     return (
-        <div className="citySearch">
+        <div>
             <div className="p-inputgroup p-mb-4">
                 <InputText
                     placeholder="Enter city name..."
