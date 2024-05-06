@@ -28,6 +28,18 @@
 .weather-code-div {
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.max-temp {
+    color: green;
+    font-size: 24px;
+}
+
+.min-temp {
+    color: red;
+    font-size: 24px;
 }
 
 @tailwind base;

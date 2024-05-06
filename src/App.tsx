@@ -60,7 +60,7 @@ function App() {
             <CitySearch onSearch={handleSearch} />
             {weatherData && (
                 <div className="inner-div">
-                    <Card>
+                    <Card title={`${city}`} subTitle="Max and min temperature">
                         <WeatherCode city={city} />
                     </Card>
 
