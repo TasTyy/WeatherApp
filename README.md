@@ -4,4 +4,4 @@ Simple web application which visualizes data about weather.
 
 It uses single page application framework ~ React and REST services provided by [OpenMeteo](https://open-meteo.com/).
 
-![image](https://github.com/TasTyy/WeatherApp/tree/staging/src/assets/chrome_HB5N3YBxew.png)
+![chrome_HB5N3YBxew](https://github.com/TasTyy/WeatherApp/assets/43649526/bd7c9d8d-e57e-43de-8029-ad4fa07371c2)
